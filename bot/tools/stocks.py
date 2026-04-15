@@ -18,7 +18,7 @@ def get_stock_price(ticker: str) -> str:
         hist = stock.history(period="2d")
 
         if hist.empty:
-            return f"❌ Could not find stock data for **'{ticker}'**. Check the ticker symbol."
+            return f"Could not find stock data for **'{ticker}'**. Check the ticker symbol."
 
         current = hist["Close"].iloc[-1]
         prev_close = hist["Close"].iloc[-2] if len(hist) >= 2 else hist["Open"].iloc[-1]

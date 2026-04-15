@@ -1,85 +1,96 @@
-# ⚡ MAX Bot — AI Voice Assistant
+<div align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success.svg?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Python-3.14-blue.svg?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/Flask-Web_Framework-black.svg?style=for-the-badge&logo=flask">
+  
+  <h1>⚡ MAX Bot — Advanced AI Voice Assistant</h1>
+  <p>A smart, browser-native voice assistant powered by Gemini 2.5 Flash, packed with modular tools and a beautiful glassmorphism interface.</p>
+</div>
 
-> A voice-controlled AI assistant built with Python, Flask, Gemini AI, and a sleek glassmorphism web UI.
+---
 
-## Features
+## ✨ Features Overview
+
+MAX uses advanced Natural Language Processing to figure out what you want and dynamically selects the right tool for the job.
 
 | Feature | Description |
 |---|---|
-| 🎙 **Voice Input** | Push-to-talk microphone via `SpeechRecognition` |
-| 🔊 **Text-to-Speech** | Natural voice responses via `pyttsx3` |
-| 👂 **Wake Word** | Hands-free activation with "Hey Max" |
-| 🤖 **Gemini AI** | Conversational AI powered by Google Gemini + LangChain |
-| 🌤 **Weather** | Real-time weather via OpenWeatherMap API |
-| 📈 **Stocks** | Live stock prices via yFinance |
-| ▶️ **YouTube** | Video search and playback links |
-| 📧 **Email** | Send emails via Gmail SMTP |
-| 🔍 **Web Search** | DuckDuckGo search (no API key needed) |
+| 🎙 **Native Voice Input** | Push-to-talk microphone and hands-free "Hey Max" wake word via modern Browser **Web Speech API** (Zero complex C++ `pyaudio` dependencies!). |
+| 🔊 **Natural TTS** | Text-To-Speech read aloud seamlessly via browser-native natural voices. |
+| 🤖 **Gemini 2.5 Flash AI** | Highly intelligent conversational agent powered by Google's latest Gemini architecture. |
+| ▶️ **YouTube Interactive Gallery** | Searches YouTube and generates a horizontal, highly interactive scrollable gallery. Clicking a card instantly opens a built-in Modal Iframe player to watch the video *without leaving the chat*! |
+| 🔍 **Intelligent Web Search** | Scrapes the web and routes the raw text back through Gemini for summarizing, so you get polished, conversational answers instead of link dumps. |
+| 📧 **Multi-User Email** | Send emails directly from the chat. The UI features a slick modal allowing anyone using the app to securely enter their own SMTP credentials. |
+| 🌤 **Live Weather** | Hooked up to OpenWeatherMap for instant, accurate forecasts anywhere. |
+| 📈 **Live Stocks** | Hooked up to Yahoo Finance (`yFinance`) for instant stock and crypto tickers. |
 
-## Setup
+## 🚀 Interactive UI Features
+- **Glassmorphism Design:** Dark mode gradients, animated background orbs, blurring, and stunning visuals via `style.css`.
+- **Quick Action Chips:** Tap the suggested bubbles on the home screen to instantly execute commands without typing.
+- **Dynamic Modals:** Smooth pop-ups for composing Emails, entering Stock/City names, and watching YouTube videos.
 
-### 1. Install Dependencies
+---
 
-> **Windows users:** PyAudio requires a special installation step.
+## 🛠️ Setup & Installation
+
+Because MAX now utilizes browser-native speech decoding, installation is incredibly fast and avoids the notoriously buggy `PyAudio`.
+
+### 1. Install Requirements
 
 ```bash
-pip install pipwin
-pipwin install pyaudio
 pip install -r requirements.txt
 ```
 
-### 2. Configure API Keys
+### 2. Configure Environment Keys
 
-```bash
-copy .env.example .env
-```
-
-Edit `.env` and fill in your keys:
+Create a `.env` file in the main folder (you can copy `.env.example` as a template). 
 
 ```env
-GEMINI_API_KEY=your_gemini_key       # https://aistudio.google.com
-WEATHER_API_KEY=your_owm_key         # https://openweathermap.org/api
+GEMINI_API_KEY=your_gemini_key       # Get from https://aistudio.google.com
+WEATHER_API_KEY=your_owm_key         # Get from https://openweathermap.org/api
+
+# (Optional) Default Server Email Config:
 EMAIL_ADDRESS=your_gmail@gmail.com
-EMAIL_PASSWORD=your_app_password     # Gmail App Password (not regular password)
+EMAIL_PASSWORD=your_app_password     # Use a Google App Password, NOT your real password
 ```
+*Note: If users do not want to use the default `.env` server email, the front-end Email Modal allows them to inject their own temporary credentials when sending an email!*
 
-#### Getting a Gmail App Password:
-1. Enable 2FA at [myaccount.google.com](https://myaccount.google.com) → Security
-2. Go to Security → **App passwords**
-3. Create a password for "Mail" and paste it as `EMAIL_PASSWORD`
-
-### 3. Run
+### 3. Run Locally
 
 ```bash
 python app.py
 ```
+Go to `http://localhost:5000` in your web browser. 
+*(Note: To use the Microphone, modern browsers require that you run via `localhost` or serve the application securely over `HTTPS`).*
 
-Open **http://localhost:5000** in your browser.
+---
 
-## Usage
+## ☁️ Production Deployment
 
-- **Type** a query in the input box and press Enter or click Send
-- **Click the mic button** (🎤) to use push-to-talk voice input
-- **Toggle "Hey Max"** in the header to enable hands-free wake word detection
-- Use **Quick Actions** (Weather / Stocks / YouTube / Email / Search) for fast access
-- **Suggestion chips** on the welcome screen for quick demos
+MAX Bot is pre-configured for cloud deployment!
 
-## Example Commands
+We use **Gunicorn** as our production WSGI server. A `Procfile` is already included in the repo.
+1. Push your repository to GitHub.
+2. Link the repository to a free host like **Render.com** or **Heroku**.
+3. Set your Build Command to: `pip install -r requirements.txt`
+4. Make sure to input your `GEMINI_API_KEY` and `WEATHER_API_KEY` into your cloud provider's Environment Variables panel.
+5. Deploy safely over HTTPS!
 
-```
-What's the weather in New Delhi?
-Get the stock price of Nvidia
-Play Blinding Lights on YouTube
-Search for latest AI news
-Send email to john@example.com
-Tell me a joke
-What is quantum computing?
-```
+---
 
-## Tech Stack
+## 💬 Example Prompts to Try
 
-- **Backend:** Python 3.10+, Flask
-- **AI:** Google Gemini 1.5 Flash (via LangChain)
-- **Speech:** SpeechRecognition (Google Web Speech), pyttsx3, PyAudio
-- **Data:** yFinance, OpenWeatherMap, youtube-search-python, DuckDuckGo Search
-- **Frontend:** Vanilla HTML/CSS/JS — Dark glassmorphism UI, Google Fonts (Outfit)
+* "Hey Max, what's the weather like in Tokyo right now?"
+* "Get me the stock price for Nvidia (NVDA)"
+* "Play lo-fi study girl music on YouTube" *(Watch the interactive gallery pop up!)*
+* "Search the web for what happened to the Mars Opportunity Rover" *(Watch Gemini summarize the raw search!)*
+* "Send an email to my friend"
+
+---
+
+## 🏗️ Architecture
+
+- **Backend Logic:** Python 3.10+, Flask, Gunicorn
+- **AI Engine:** Google `gemini-2.5-flash`
+- **Tooling:** `yFinance`, `duckduckgo_search`, `smtplib`, native `urllib` scraping module.
+- **Frontend & State:** Vanilla HTML/CSS/JS (Zero framework bloat), Web Speech API.

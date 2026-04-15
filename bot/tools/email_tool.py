@@ -13,7 +13,7 @@ def send_email(to_address: str, subject: str, body: str, from_address: str = Non
 
     if not from_address or not password:
         return (
-            "❌ Email credentials not configured.\n"
+            "Email credentials not configured.\n"
             "Please set EMAIL_ADDRESS and EMAIL_PASSWORD in your .env file.\n"
             "Use a Gmail App Password (not your regular password)."
         )
@@ -29,15 +29,15 @@ def send_email(to_address: str, subject: str, body: str, from_address: str = Non
             server.login(from_address, password)
             server.send_message(msg)
 
-        return f"✅ Email sent successfully to **{to_address}**!"
+        return f"Email sent successfully to **{to_address}**!"
 
     except smtplib.SMTPAuthenticationError:
         return (
-            "❌ Gmail authentication failed.\n"
+            "Gmail authentication failed.\n"
             "Make sure you're using an **App Password** (not your regular Gmail password).\n"
             "Go to: myaccount.google.com → Security → App passwords"
         )
     except smtplib.SMTPRecipientsRefused:
-        return f"❌ Invalid recipient address: {to_address}"
+        return f"Invalid recipient address: {to_address}"
     except Exception as e:
-        return f"❌ Error sending email: {str(e)}"
+        return f"Error sending email: {str(e)}"
