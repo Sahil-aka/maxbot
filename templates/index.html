@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAX Bot — AI Voice Assistant</title>
+  <meta name="description" content="MAX Bot: AI-powered voice assistant with weather, stocks, YouTube, email, and web search." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- Ambient Background -->
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="orb orb-purple"></div>
+    <div class="orb orb-cyan"></div>
+    <div class="orb orb-pink"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ── HEADER ── -->
+    <header class="app-header glass">
+      <div class="logo-group">
+        <div class="logo-icon" aria-label="MAX logo">
+          <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="url(#lg)"/><path d="M10 26V10l8 9 8-9v16" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="lg" x1="0" y1="0" x2="36" y2="36"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>
+        </div>
+        <div>
+          <h1 class="logo-name">MAX<span class="logo-dot">.</span></h1>
+          <p class="logo-sub">Voice Assistant</p>
+        </div>
+      </div>
+
+      <div class="status-pill" id="statusPill">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-label" id="statusLabel">Ready</span>
+      </div>
+
+      <div class="header-actions">
+        <label class="wake-toggle-wrap" title="Toggle Hey Max wake word">
+          <span class="wake-label">Hey Max</span>
+          <div class="toggle-switch">
+            <input type="checkbox" id="wakeToggle" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </div>
+        </label>
+        <button class="icon-btn" id="clearBtn" title="Clear conversation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── QUICK ACTIONS ── -->
+    <section class="quick-actions" aria-label="Quick actions">
+      <button class="qa-card" id="qa-weather" data-type="weather">
+        <span class="qa-icon">🌤</span><span>Weather</span>
+      </button>
+      <button class="qa-card" id="qa-stocks" data-type="stocks">
+        <span class="qa-icon">📈</span><span>Stocks</span>
+      </button>
+      <button class="qa-card" id="qa-youtube" data-type="youtube">
+        <span class="qa-icon">▶️</span><span>YouTube</span>
+      </button>
+      <button class="qa-card" id="qa-email" data-type="email">
+        <span class="qa-icon">📧</span><span>Email</span>
+      </button>
+      <button class="qa-card" id="qa-search" data-type="search">
+        <span class="qa-icon">🔍</span><span>Search</span>
+      </button>
+    </section>
+
+    <!-- ── CHAT AREA ── -->
+    <main class="chat-area" id="chatArea" role="log" aria-live="polite">
+      <div class="chat-welcome" id="welcomeScreen">
+        <div class="welcome-glyph">⚡</div>
+        <h2>Hi, I'm <span class="gradient-text">MAX</span></h2>
+        <p>Your AI-powered voice assistant. Ask me anything using the mic or type below.</p>
+        <div class="welcome-chips">
+          <button class="chip" data-query="What's the weather in Mumbai?">🌤 Mumbai weather</button>
+          <button class="chip" data-query="Get the stock price of Tesla">📈 Tesla stock</button>
+          <button class="chip" data-query="Play Shape of You on YouTube">▶️ Shape of You</button>
+          <button class="chip" data-query="Tell me a fun fact about space">🚀 Space fact</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── INPUT AREA ── -->
+    <footer class="input-area glass">
+      <button class="mic-btn" id="micBtn" title="Push to talk" aria-label="Start voice input">
+        <span class="mic-rings">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+          <span class="ring r3"></span>
+        </span>
+        <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="2" width="6" height="12" rx="3"/>
+          <path d="M19 10a7 7 0 0 1-14 0"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="8" y1="22" x2="16" y2="22"/>
+        </svg>
+      </button>
+      <div class="text-input-wrap">
+        <input
+          type="text"
+          id="textInput"
+          class="text-input"
+          placeholder="Ask MAX anything…"
+          autocomplete="off"
+          aria-label="Type your query"
+        />
+        <button class="send-btn" id="sendBtn" title="Send" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ── EMAIL MODAL ── -->
+  <div class="modal-backdrop" id="emailBackdrop" aria-modal="true" role="dialog" hidden>
+    <div class="modal glass">
+      <div class="modal-header">
+        <h3>📧 Compose Email</h3>
+        <button class="modal-close" id="emailClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; gap:10px;">
+           <div class="field-group" style="flex:1;">
+             <label for="senderEmail">Your Email</label>
+             <input type="email" id="senderEmail" placeholder="youremail@gmail.com" />
+           </div>
+           <div class="field-group" style="flex:1;">
+             <label for="senderPassword">App Password</label>
+             <input type="password" id="senderPassword" placeholder="App Password" />
+           </div>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:10px;">If left blank, it uses the server's default email config.</p>
+        <div class="field-group">
+          <label for="emailTo">To</label>
+          <input type="email" id="emailTo" placeholder="recipient@example.com" />
+        </div>
+        <div class="field-group">
+          <label for="emailSubject">Subject</label>
+          <input type="text" id="emailSubject" placeholder="Enter subject" />
+        </div>
+        <div class="field-group">
+          <label for="emailBody">Message</label>
+          <textarea id="emailBody" rows="5" placeholder="Write your message…"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="emailCancel">Cancel</button>
+        <button class="btn-primary" id="emailSend">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MINI INPUT MODAL (city / ticker prompts) ── -->
+  <div class="modal-backdrop" id="miniBackdrop" aria-modal="true" role="dialog" hidden>
+    <div class="modal modal-sm glass">
+      <div class="modal-header">
+        <h3 id="miniTitle">Enter Details</h3>
+        <button class="modal-close" id="miniClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="field-group">
+          <input type="text" id="miniInput" placeholder="" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="miniCancel">Cancel</button>
+        <button class="btn-primary" id="miniSubmit">Go</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── YOUTUBE VIDEO MODAL ── -->
+  <div class="modal-backdrop" id="ytBackdrop" aria-modal="true" role="dialog" hidden>
+    <div class="modal yt-modal glass">
+      <div class="modal-header">
+        <h3>▶️ Playing YouTube</h3>
+        <button class="modal-close" id="ytClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body" style="padding:0; overflow:hidden;">
+        <iframe id="ytIframe" width="100%" height="400" src="" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
