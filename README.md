@@ -8,6 +8,7 @@
 
   <h3>🌐 <a href="https://maxbot-4sjo.onrender.com">Try it live here! (https://maxbot-4sjo.onrender.com)</a></h3>
   
+  <img width="1849" height="962" alt="image" src="https://github.com/user-attachments/assets/4560c46d-3442-4456-86fa-b73df7c77f92" />
   <img src="./preview.png" alt="MAX Bot UI Screenshot" width="800" style="border-radius: 12px; margin-top: 15px; box-shadow: 0 4px 20px rgba(124,58,237,0.35);">
 </div>
 
