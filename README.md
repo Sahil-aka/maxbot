@@ -5,6 +5,10 @@
   
   <h1>⚡ MAX Bot — Advanced AI Voice Assistant</h1>
   <p>A smart, browser-native voice assistant powered by Gemini 2.5 Flash, packed with modular tools and a beautiful glassmorphism interface.</p>
+
+  <h3>🌐 <a href="https://maxbot-4sjo.onrender.com">Try it live here! (https://maxbot-4sjo.onrender.com)</a></h3>
+  
+  <img src="./preview.png" alt="MAX Bot UI Screenshot" width="800" style="border-radius: 12px; margin-top: 15px; box-shadow: 0 4px 20px rgba(124,58,237,0.35);">
 </div>
 
 ---
