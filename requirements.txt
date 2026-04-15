@@ -8,3 +8,4 @@ google-generativeai>=0.7.0
 yfinance>=0.2.36
 requests>=2.31.0
 gunicorn==21.2.0
+duckduckgo-search>=5.0.0

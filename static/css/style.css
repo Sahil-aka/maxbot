@@ -113,7 +113,7 @@ html, body {
   z-index: 1;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  height: 100vh;
+  height: 100dvh;
   max-width: 920px;
   margin: 0 auto;
   padding: 12px;
